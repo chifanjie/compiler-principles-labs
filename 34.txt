@@ -1,0 +1,116 @@
+非终结符：
+T	 M	 E	 F	 N	 P	 Q	 
+
+终结符：
++	 *	 (	 )	 a	 b	 ^	 
+
+文法：
+E-> T M
+M-> + E
+M-> #
+T-> F N
+N-> T
+N-> #
+F-> P Q
+Q-> * Q
+Q-> #
+P-> ( E )
+P-> a
+P-> b
+P-> ^
+非终结符表：
+E:	N
+F:	N
+M:	Y
+N:	Y
+P:	N
+Q:	Y
+T:	N
+计算First集：
+E:	(	^	a	b	
+F:	(	^	a	b	
+M:	#	+	
+N:	#	(	^	a	b	
+P:	(	^	a	b	
+Q:	#	*	
+T:	(	^	a	b	
+计算Follow集：
+E:	#	)	
+F:	#	(	)	+	^	a	b	
+M:	#	)	
+N:	#	)	+	
+P:	#	(	)	*	+	^	a	b	
+Q:	#	(	)	+	^	a	b	
+T:	#	)	+	
+计算Select集：
+        E->T M:(	^	a	b	
+        M->+ E:+	
+          M->#:#	)	
+        T->F N:(	^	a	b	
+          N->T:(	^	a	b	
+          N->#:#	)	+	
+        F->P Q:(	^	a	b	
+        Q->* Q:*	
+          Q->#:#	(	)	+	^	a	b	
+      P->( E ):(	
+          P->a:a	
+          P->b:b	
+          P->^:^	
+得到预测分析表：
+          +         *         (         )         a         b         ^         #         
+T                             F N                 F N       F N       F N                 
+M         + E                           #                                       #         
+E                             T M                 T M       T M       T M                 
+F                             P Q                 P Q       P Q       P Q                 
+N         #                   T         #         T         T         T         #         
+P                             ( E )               a         b         ^                   
+Q         #         * Q       #         #         #         #         #         #         
+开始分析句子:( a ^ b + a ) * b
+步骤                          分析栈                        剩余输入串                    推导所用的产生式或匹配        
+1                             # E                           ( a ^ b + a ) * b #           E->T M                
+2                             # M T                         ( a ^ b + a ) * b #           T->F N                
+3                             # M N F                       ( a ^ b + a ) * b #           F->P Q                
+4                             # M N Q P                     ( a ^ b + a ) * b #           P->( E )              
+5                             # M N Q ) E (                 ( a ^ b + a ) * b #           "("匹配               
+6                             # M N Q ) E                   a ^ b + a ) * b #             E->T M                
+7                             # M N Q ) M T                 a ^ b + a ) * b #             T->F N                
+8                             # M N Q ) M N F               a ^ b + a ) * b #             F->P Q                
+9                             # M N Q ) M N Q P             a ^ b + a ) * b #             P->a                  
+10                            # M N Q ) M N Q a             a ^ b + a ) * b #             "a"匹配               
+11                            # M N Q ) M N Q               ^ b + a ) * b #               Q->#                  
+12                            # M N Q ) M N                 ^ b + a ) * b #               N->T                  
+13                            # M N Q ) M T                 ^ b + a ) * b #               T->F N                
+14                            # M N Q ) M N F               ^ b + a ) * b #               F->P Q                
+15                            # M N Q ) M N Q P             ^ b + a ) * b #               P->^                  
+16                            # M N Q ) M N Q ^             ^ b + a ) * b #               "^"匹配               
+17                            # M N Q ) M N Q               b + a ) * b #                 Q->#                  
+18                            # M N Q ) M N                 b + a ) * b #                 N->T                  
+19                            # M N Q ) M T                 b + a ) * b #                 T->F N                
+20                            # M N Q ) M N F               b + a ) * b #                 F->P Q                
+21                            # M N Q ) M N Q P             b + a ) * b #                 P->b                  
+22                            # M N Q ) M N Q b             b + a ) * b #                 "b"匹配               
+23                            # M N Q ) M N Q               + a ) * b #                   Q->#                  
+24                            # M N Q ) M N                 + a ) * b #                   N->#                  
+25                            # M N Q ) M                   + a ) * b #                   M->+ E                
+26                            # M N Q ) E +                 + a ) * b #                   "+"匹配               
+27                            # M N Q ) E                   a ) * b #                     E->T M                
+28                            # M N Q ) M T                 a ) * b #                     T->F N                
+29                            # M N Q ) M N F               a ) * b #                     F->P Q                
+30                            # M N Q ) M N Q P             a ) * b #                     P->a                  
+31                            # M N Q ) M N Q a             a ) * b #                     "a"匹配               
+32                            # M N Q ) M N Q               ) * b #                       Q->#                  
+33                            # M N Q ) M N                 ) * b #                       N->#                  
+34                            # M N Q ) M                   ) * b #                       M->#                  
+35                            # M N Q )                     ) * b #                       ")"匹配               
+36                            # M N Q                       * b #                         Q->* Q                
+37                            # M N Q *                     * b #                         "*"匹配               
+38                            # M N Q                       b #                           Q->#                  
+39                            # M N                         b #                           N->T                  
+40                            # M T                         b #                           T->F N                
+41                            # M N F                       b #                           F->P Q                
+42                            # M N Q P                     b #                           P->b                  
+43                            # M N Q b                     b #                           "b"匹配               
+44                            # M N Q                       #                             Q->#                  
+45                            # M N                         #                             N->#                  
+46                            # M                           #                             M->#                  
+47                            #                             #                             接受                  

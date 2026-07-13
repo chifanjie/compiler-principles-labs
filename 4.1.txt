@@ -1,0 +1,3 @@
+Error type 2 at Line 1: Undefined Function - Undefined function "int main".
+Error type 3 at Line 1: Variable Redefinition - Redefined variable "main()".
+Error type 1 at Line 3: Undefined Variable - Undefined variable " int i".

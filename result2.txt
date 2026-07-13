@@ -1,0 +1,76 @@
+非终结符号如下：  EAB
+终结符号如下：  abcd
+文法产生式的个数：  3
+
+请输入第1产生式：
+E->aA|bB
+请输入第2产生式：
+A->cA|d
+请输入第3产生式：
+B->cB|d
+
+消除 | 的产生式：
+S->E
+E->aA
+E->bB
+A->cA
+A->d
+B->cB
+B->d
+
+这个文法的项目有：
+S->.E
+S->E.
+E->.aA
+E->a.A
+E->aA.
+E->.bB
+E->b.B
+E->bB.
+A->.cA
+A->c.A
+A->cA.
+A->.d
+A->d.
+B->.cB
+B->c.B
+B->cB.
+B->.d
+B->d.
+
+文法的LR(0)项目集规范族：
+I0:     E->.aA      E->.bB      S->.E       
+I1:     A->.cA      A->.d       E->a.A      
+I2:     B->.cB      B->.d       E->b.B      
+I3:     S->E.       
+I4:     A->.cA      A->.d       A->c.A      
+I5:     A->d.       
+I6:     E->aA.      
+I7:     B->.cB      B->.d       B->c.B      
+I8:     B->d.       
+I9:     E->bB.      
+I10:     A->cA.      
+I11:     B->cB.      
+LR(0)分析表                                             
+状态           ACTION                    GOTO           
+        a     b     c     d     #     E     A     B     
+0       s1    s2                      3                 
+1                   s4    s5                6           
+2                   s7    s8                      9     
+3                               acc                     
+4                   s4    s5                10          
+5       r4    r4    r4    r4    r4                      
+6       r1    r1    r1    r1    r1                      
+7                   s7    s8                      11    
+8       r6    r6    r6    r6    r6                      
+9       r2    r2    r2    r2    r2                      
+10      r3    r3    r3    r3    r3                      
+11      r5    r5    r5    r5    r5                      
+
+待分析的输入串为（‘#’是输入串的结束符）：LR(0)分析器的工作过程：
+步骤    状态栈      符号栈            输入串	动作        
+0       0           #                   bcc#	预备        
+1       02          #b                   cc#	把(2,b)移进栈
+2       027         #bc                   c#	把(7,c)移进栈
+3       0277        #bcc                   #	把(7,c)移进栈
+错误

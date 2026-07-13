@@ -1,0 +1,2 @@
+Iput pl/0 file ?one.txt
+1 int main()

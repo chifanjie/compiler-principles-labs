@@ -1,0 +1,14 @@
+Debug/
+Release/
+bin/
+obj/
+*.exe
+*.dll
+*.o
+*.obj
+*.a
+*.lib
+*.pdb
+*.tmp
+*.layout
+*.log

@@ -1,0 +1,7 @@
+EAB
+abcd
+3
+E->aA|bB
+A->cA|d
+B->cB|d
+bcc#
