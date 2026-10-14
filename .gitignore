@@ -12,3 +12,6 @@ obj/
 *.tmp
 *.layout
 *.log
+
+# Local validation and generated files
+build/
